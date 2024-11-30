@@ -6,6 +6,7 @@ export interface adminLogin {
 export interface AdminSignup {
     name: string;
     email: string;
+    role: string;
     adminCode: string;
     password: string;
 }

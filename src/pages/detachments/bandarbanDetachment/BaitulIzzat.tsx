@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import useTitle from '../../hooks/useTitle';
-import Sidebar from '../../components/sidebar/Sidebar';
-import { useGetFacebookPagesQuery } from '../../redux/features/api/endPoints/facebookPageEndpoint/facebookPageEndpoint';
-import Loader from '../../components/loader/Loader';
-import ErrorMessage from '../../components/errorMessage/ErrorMessage';
-import PageCard from '../../components/cards/pageCard/PageCard';
-import CreatePagesPostModal from '../../components/modal/createPagesPostModal/CreatePagesPostModal';
-import CreatePagesPost from '../../components/createPagesPost/CreatePagesPost';
+import { useState } from "react";
+import useTitle from "../../../hooks/useTitle";
+import { useGetFacebookPagesQuery } from "../../../redux/features/api/endPoints/facebookPageEndpoint/facebookPageEndpoint";
+import Loader from "../../../components/loader/Loader";
+import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import PageCard from "../../../components/cards/pageCard/PageCard";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import CreatePagesPostModal from "../../../components/modal/createPagesPostModal/CreatePagesPostModal";
+import CreatePagesPost from "../../../components/createPagesPost/CreatePagesPost";
 
-export default function Home() {
-    useTitle('Home');
+export default function BaitulIzzat() {
+    useTitle('Baitul Izzat');
     const { data, isError, isLoading } = useGetFacebookPagesQuery('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,11 +39,11 @@ export default function Home() {
     return (
         <div className="flex h-screen">
             {/* Sidebar */}
-            <Sidebar activeMenu='All Pages' />
+            <Sidebar activeMenu='Baitul Izzat' />
 
             {/* Main Content */}
             <main className="w-[77%] px-5 overflow-y-auto">
-                <h2 className='text-center text-3xl py-6 mb-4 font-bold border-b'>All Pages</h2>
+                <h2 className='text-center text-3xl py-6 mb-4 font-bold border-b'>Pages of Baitul Izzat</h2>
                 <div className='flex justify-end items-center mb-6'>
                     <button
                         onClick={handleOpenModal}

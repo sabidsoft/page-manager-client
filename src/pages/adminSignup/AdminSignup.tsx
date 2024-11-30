@@ -14,6 +14,7 @@ export default function AdminSignup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [adminCode, setAdminCode] = useState("");
+    const [role, setRole] = useState("Super Admin"); // Default role
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -26,7 +27,7 @@ export default function AdminSignup() {
             return;
         }
 
-        adminSignup({ name, email, adminCode, password });
+        adminSignup({ name, email, adminCode, role, password });
     };
 
     useEffect(() => {
@@ -49,9 +50,9 @@ export default function AdminSignup() {
 
     return (
         <div className='h-screen flex justify-center items-center bg-white'>
-            <div className='w-full max-w-md bg-gray-100 p-8 rounded-lg shadow-lg'>
+            <div className='w-[700px] bg-gray-100 p-8 rounded-lg shadow-lg'>
                 <h2 className='text-center text-2xl font-bold mb-6'>Admin Signup</h2>
-                
+
                 <form onSubmit={handleSubmit} className='mb-4'>
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>Name</label>
@@ -77,6 +78,21 @@ export default function AdminSignup() {
                             required
                             className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                         />
+                    </div>
+
+                    <div className='mb-4'>
+                        <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='role'>Role</label>
+                        <select
+                            id='role'
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            required
+                            className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                        >
+                            <option value="Super Admin">Super Admin</option>
+                            <option value="Detachment Admin">Detachment Admin</option>
+                            <option value="District Admin">District Admin</option>
+                        </select>
                     </div>
 
                     <div className='mb-4'>
@@ -120,22 +136,13 @@ export default function AdminSignup() {
 
                     <button
                         type='submit'
-                        className='w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none'
+                        className='w-full bg-blue-600 text-white mt-5 py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none'
                     >
                         Sign Up
                     </button>
                 </form>
 
                 {errorMessage && <p className='text-red-500 text-center mt-4'>{errorMessage}</p>}
-
-                {/* <div className='mt-4 text-center'>
-                    <p className='text-sm text-gray-600'>
-                        Already have an account?
-                        <Link to="/admin-login" className='text-blue-600 hover:underline ml-1'>
-                            Log in here
-                        </Link>
-                    </p>
-                </div> */}
             </div>
         </div>
     );

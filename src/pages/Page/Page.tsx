@@ -41,7 +41,7 @@ export default function Page() {
         <div className="flex h-screen">
             <Sidebar activeMenu="All Pages" />
 
-            <main className="w-[75%] overflow-y-auto">
+            <main className="w-[77%] overflow-y-auto">
                 <div className="bg-[#fff] flex justify-center pt-5">
                     <div className="flex items-center">
                         <img
