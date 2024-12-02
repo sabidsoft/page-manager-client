@@ -17,6 +17,8 @@ export default function Page() {
 
     const facebookPage = data?.data?.facebookPage;
 
+    console.log(facebookPage)
+
     let content;
 
     if (isLoading) content = <Loader />;

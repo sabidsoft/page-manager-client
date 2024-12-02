@@ -5,12 +5,13 @@ import Loader from "../../../components/loader/Loader";
 import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
 import PageCard from "../../../components/cards/pageCard/PageCard";
 import Sidebar from "../../../components/sidebar/Sidebar";
-import CreatePagesPostModal from "../../../components/modal/createPagesPostModal/CreatePagesPostModal";
+import CreatePostModal from "../../../components/modal/createPostModal/CreatePostModal";
 import CreatePagesPost from "../../../components/createPagesPost/CreatePagesPost";
+import FacebookPageLogin from "../../../components/facebookPageLogin/FacebookPageLogin";
 
 export default function AllPagesOfDhakaDT() {
     useTitle('All Pages of Dhaka DT');
-    const { data, isError, isLoading } = useGetFacebookPagesQuery('');
+    const { data, isError, isLoading } = useGetFacebookPagesQuery({ fieldName: 'detachmentName', fieldValue: 'Dhaka Detachment' });
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const facebookPages = data?.data.facebookPages;
@@ -22,7 +23,7 @@ export default function AllPagesOfDhakaDT() {
     if (!isLoading && isError) content = <ErrorMessage message="Something went wrong." />;
 
     if (!isLoading && !isError && facebookPages && facebookPages.length === 0)
-        content = <ErrorMessage message='Oops! Sorry! There is no Facebook page available!' />;
+        content = <ErrorMessage message='Oops! There are no Facebook page available!' />;
 
     if (!isLoading && !isError && facebookPages && facebookPages.length > 0)
         content = (
@@ -42,23 +43,38 @@ export default function AllPagesOfDhakaDT() {
             <Sidebar activeMenu='All Pages of Dhaka DT' />
 
             {/* Main Content */}
-            <main className="w-[77%] px-5 overflow-y-auto">
-                <h2 className='text-center text-3xl py-6 mb-4 font-bold border-b'>All Pages of Dhaka DT</h2>
-                <div className='flex justify-end items-center mb-6'>
-                    <button
-                        onClick={handleOpenModal}
-                        className='bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none'
-                    >
-                        Create Post to All Pages
-                    </button>
+            <main className="w-[77%] overflow-y-auto">
+                <div className="flex justify-between items-center px-6 py-6 shadow">
+                    <h2 className='text-center text-3xl font-bold'>All Pages of Dhaka DT</h2>
+                    <div className="flex items-start">
+                        <button
+                            onClick={handleOpenModal}
+                            className='bg-blue-600 text-white py-1 px-4 mr-5 rounded-lg hover:bg-blue-700 focus:outline-none'
+                        >
+                            Create Post to All Pages
+                        </button>
+
+                        <FacebookPageLogin
+                            detachmentName="Dhaka Detachment"
+                            districtName=""
+                            navigateTo="/dhaka-detachment/all-pages-of-dhaka-dt"
+                        />
+                    </div>
                 </div>
-                {content}
+
+                <div className="px-16 py-10">
+                    {content}
+                </div>
             </main>
 
             {/* Modal for Create Post */}
-            <CreatePagesPostModal isOpen={isModalOpen} onClose={handleCloseModal}>
-                <CreatePagesPost onClose={handleCloseModal} />
-            </CreatePagesPostModal>
+            <CreatePostModal isOpen={isModalOpen} onClose={handleCloseModal}>
+                <CreatePagesPost
+                    fieldName="detachmentName"
+                    fieldValue="Dhaka Detachment"
+                    onClose={handleCloseModal}
+                />
+            </CreatePostModal>
         </div>
     );
 }

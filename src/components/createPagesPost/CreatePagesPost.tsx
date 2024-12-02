@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import { usePostToFacebookPagesMutation } from '../../redux/features/api/endPoints/facebookPageEndpoint/facebookPageEndpoint';
 import { toast } from 'react-toastify';
-import { PostData } from './types';
 import { MoonLoader } from "react-spinners";
+import { CreatePagesPostProps, PostData } from './types';
+import { usePostToFacebookPagesMutation } from '../../redux/features/api/endPoints/facebookPageEndpoint/facebookPageEndpoint';
 
-interface CreatePagesPostProps {
-    onClose: () => void;
-}
 
-export default function CreatePagesPost({ onClose }: CreatePagesPostProps) {
+export default function CreatePagesPost({ onClose, fieldName, fieldValue }: CreatePagesPostProps) {
     const [errorMessage, setErrorMessage] = useState('');
 
     const [postToFacebookPages, { data, error, isLoading }] = usePostToFacebookPagesMutation();
@@ -18,6 +15,8 @@ export default function CreatePagesPost({ onClose }: CreatePagesPostProps) {
         link: '',
         mediaType: 'text',
         mediaFile: null,
+        fieldName,
+        fieldValue
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -37,6 +36,8 @@ export default function CreatePagesPost({ onClose }: CreatePagesPostProps) {
         const formData = new FormData();
         formData.append('message', postData.message);
         formData.append('mediaType', postData.mediaType);
+        formData.append('fieldName', postData.fieldName);
+        formData.append('fieldValue', postData.fieldValue);
 
         if (postData.link && postData.mediaType === 'text') {
             formData.append('link', postData.link);
@@ -71,7 +72,7 @@ export default function CreatePagesPost({ onClose }: CreatePagesPostProps) {
             <main className="w-[100%] overflow-y-auto">
                 <div className='flex justify-center items-center h-full'>
                     <form onSubmit={handleSubmit} className="bg-[#fff] w-[900px] p-8 rounded-xl shadow">
-                        <h2 className='text-center text-2xl pb-8 font-bold'>Create Pages Post</h2>
+                        <h2 className='text-center text-2xl pb-8 font-bold'>Create Post</h2>
 
                         {/* Message Field */}
                         <div className='mb-5'>
@@ -138,7 +139,7 @@ export default function CreatePagesPost({ onClose }: CreatePagesPostProps) {
                             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                         >
 
-                            {isLoading ? <div className='flex justify-center px-4'><MoonLoader color="#fff" size={16} /> </div> : 'Submit Post to All Pages'}
+                            {isLoading ? <div className='flex justify-center px-4'><MoonLoader color="#fff" size={16} /> </div> : 'Submit Post'}
                         </button>
 
                         {errorMessage && <p className='text-red-500 mt-4'>{errorMessage}</p>}

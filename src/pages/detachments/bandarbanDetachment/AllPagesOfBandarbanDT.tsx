@@ -5,12 +5,12 @@ import Loader from "../../../components/loader/Loader";
 import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
 import PageCard from "../../../components/cards/pageCard/PageCard";
 import Sidebar from "../../../components/sidebar/Sidebar";
-import CreatePagesPostModal from "../../../components/modal/createPagesPostModal/CreatePagesPostModal";
+import CreatePagesPostModal from "../../../components/modal/createPostModal/CreatePostModal";
 import CreatePagesPost from "../../../components/createPagesPost/CreatePagesPost";
 
 export default function AllPagesOfBandarbanDT() {
     useTitle('All Pages of Bandarban DT');
-    const { data, isError, isLoading } = useGetFacebookPagesQuery('');
+    const { data, isError, isLoading } = useGetFacebookPagesQuery({ fieldName: 'districtName', fieldValue: 'Dhaka North' });
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const facebookPages = data?.data.facebookPages;
@@ -56,9 +56,9 @@ export default function AllPagesOfBandarbanDT() {
             </main>
 
             {/* Modal for Create Post */}
-            <CreatePagesPostModal isOpen={isModalOpen} onClose={handleCloseModal}>
+            {/* <CreatePagesPostModal isOpen={isModalOpen} onClose={handleCloseModal}>
                 <CreatePagesPost onClose={handleCloseModal} />
-            </CreatePagesPostModal>
+            </CreatePagesPostModal> */}
         </div>
     );
 }

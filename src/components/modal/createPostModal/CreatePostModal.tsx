@@ -1,13 +1,7 @@
-import React from 'react';
 import { IoMdClose } from 'react-icons/io';
+import { CreatePostModalProps } from './types';
 
-interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    children: React.ReactNode;
-}
-
-const CreatePagesPostModal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export default function CreatePostModal({ isOpen, onClose, children }: CreatePostModalProps) {
     if (!isOpen) return null;
 
     return (
@@ -23,5 +17,3 @@ const CreatePagesPostModal: React.FC<ModalProps> = ({ isOpen, onClose, children 
         </div>
     );
 };
-
-export default CreatePagesPostModal;

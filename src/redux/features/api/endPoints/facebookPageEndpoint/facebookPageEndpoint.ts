@@ -1,21 +1,40 @@
 import { globalApi } from "../../globalApi";
-import { FacebookPageLogin } from "./types";
+import { FacebookLogin } from "./types";
 
 export const facebookPageEndpoint = globalApi.injectEndpoints({
     endpoints: (builder) => ({
-        facebookPageLogin: builder.mutation<any, FacebookPageLogin>({
+        facebookLogin: builder.mutation<any, FacebookLogin>({
             query: (data) => ({
-                url: '/api/facebook-pages/facebook-page-login',
+                url: '/api/facebook-pages/facebook-login',
                 method: 'POST',
                 body: data
             }),
             invalidatesTags: ['FacebookPages'],
         }),
 
-        getFacebookPages: builder.query<any, any>({
-            query: () => ({
+        postToFacebookPage: builder.mutation<any, any>({
+            query: (data) => ({
+                url: `/api/facebook-pages/create-page-post`,
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['FacebookPagePosts'],
+        }),
+
+        postToFacebookPages: builder.mutation<any, any>({
+            query: (data) => ({
+                url: '/api/facebook-pages/create-pages-post',
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['FacebookPagePosts'],
+        }),
+
+        getFacebookPages: builder.query<any, { fieldName: string, fieldValue: string }>({
+            query: ({ fieldName, fieldValue }) => ({
                 url: `/api/facebook-pages`,
-                method: "GET"
+                method: "GET",
+                params: { fieldName, fieldValue }
             }),
             keepUnusedDataFor: 60, // default 60 seconds
             providesTags: ['FacebookPages']
@@ -65,29 +84,11 @@ export const facebookPageEndpoint = globalApi.injectEndpoints({
             keepUnusedDataFor: 60,
             providesTags: (result, error, { pageId, postId }) => [{ type: 'FacebookPagePostInsights', id: `${pageId}-${postId}` },],
         }),
-
-        postToFacebookPage: builder.mutation<any, any>({
-            query: (data) => ({
-                url: `/api/facebook-pages/create-page-post`,
-                method: 'POST',
-                body: data,
-            }),
-            invalidatesTags: ['FacebookPagePosts'],
-        }),
-
-        postToFacebookPages: builder.mutation<any, any>({
-            query: (data) => ({
-                url: '/api/facebook-pages/create-pages-post',
-                method: 'POST',
-                body: data
-            }),
-            invalidatesTags: ['FacebookPagePosts'],
-        }),
     })
 })
 
 export const {
-    useFacebookPageLoginMutation,
+    useFacebookLoginMutation,
     useGetFacebookPagesQuery,
     useGetFacebookPageQuery,
     useGetFacebookPagePostsQuery,
